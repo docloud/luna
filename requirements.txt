@@ -1,0 +1,8 @@
+# Framework
+
+flask
+flask-login
+flask-principal
+flask-restful
+
+webargs
