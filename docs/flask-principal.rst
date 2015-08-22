@@ -18,35 +18,30 @@ For example, an authentication provider may be oauth, using Flask-OAuth and
 the user information may be stored in a relational database. Looseness of
 the framework is provided by using signals as the interface.
 
-主要的组件包括 Identity, Needs, Permission, IdentityContext.
+主要的组件包括身份(dentity), 需求(Needs), 权限(Permission), 和包含身份信息上下文环境(IdentityContext).
 
-    1. The Identity 代表这个用户, 并且被来自于不同位置(例如，会话)的每个请求存储/加载.
-       The Identity is the user's avatar to the system. 
-       它包含用户拥有的访问权限。
+    1. Identity 代表一个用户, 用户信息被存储/加载在多个位置，
+       比如session中，每个请求都可以获取这个用户的权限信息。
+       Identity是用户在系统中的标志，它包含用户拥有的访问权限。
     
-    2. A Need 是访问控制的最小颗粒，并代表情况的具体参数. 
-       For example "has the admin role", "can edit blog posts".
+    2. Need 是访问控制的最小颗粒，并代表特殊的操作权限。 
+       如 “管理员角色”，“可以编辑博客帖子”。
     
        Needs 可以是任何元组, 或者是任何你喜欢的任何对象, 但元组非常适合。
        预先设计的 Need 类型 (for saving your typing) 是任何一对(method, value)
-       其中，method是用于指定常用事物，例如 `"role"`, `"user"`, etc.
-       value是其中的值。比如 `('role', 'admin')` 这种.这将需要管理员角色。
-       Or Triples for use-cases such as "The permission
-       to edit a particular instance of an object or row", which might be represented
-       as the triple `('article', 'edit', 46)`, where 46 is the key/ID for that
-       row/object.
+       其中，method是用于指定常用事物，例如 `"role"`, `"user"`, 等等。
+       value是其中的值。比如 `('role', 'admin')` 这种。这将需要管理员角色。
+       或者通过三个元素来表示， 例如"编辑对象或者行的特定实例权限", 可能会被表示成
+       triple `('article', 'edit', 46)`, 其中，46是该row/object的key/id。
        
-       从本质上说，how and what Needs are is very much down to the user, and is
-       designed loosely 以至于任何影响可以作为Needs通过使用用户实例实现。
+       从本质上说，Needs 是面向用户的，如此松散的设计以至于任何影响
+       可以作为Needs通过使用用户实例实现。
 
-       Whilst a Need is a permission to access a resource, an Identity should
-       provide a set of Needs that it has access to.
+       虽然Need是获取资源的权限, Identity 提供Needs 可以访问的集合.
 
-    3. A Permission is a set of requirements, any of which should be
-       present for access to a resource.
+    3. Permission用一个set表示，包含了对资源的访问控制。
        
-    4. An IdentityContext is the context of a certain identity against a certain
-       Permission. It can be used as a context manager, or a decorator.
+    4. IdentityContext 是包含了用户权限的上下文环境，可以作为context manager 或者 decorator使用。
 
 
 .. graphviz::
