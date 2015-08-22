@@ -18,29 +18,26 @@ For example, an authentication provider may be oauth, using Flask-OAuth and
 the user information may be stored in a relational database. Looseness of
 the framework is provided by using signals as the interface.
 
-The major components are the Identity, Needs, Permission, and the IdentityContext.
+主要的组件包括 Identity, Needs, Permission, IdentityContext.
 
-    1. The Identity represents the user, and is stored/loaded from various
-       locations (eg session) for each request. The Identity is the user's
-       avatar to the system. It contains the access rights that the user has.
+    1. The Identity 代表这个用户, 并且被来自于不同位置(例如，会话)的每个请求存储/加载.
+       The Identity is the user's avatar to the system. 
+       它包含用户拥有的访问权限。
     
-    2. A Need is the smallest grain of access control, and represents a specific
-       parameter for the situation. For example "has the admin role", "can edit
-       blog posts".
+    2. A Need 是访问控制的最小颗粒，并代表情况的具体参数. 
+       For example "has the admin role", "can edit blog posts".
     
-       Needs are any tuple, or probably could be object you like, but a tuple
-       fits perfectly. The predesigned Need types (for saving your typing) are
-       either pairs of (method, value) where method is used to specify
-       common things such as `"role"`, `"user"`, etc. And the value is the
-       value. An example of such is `('role', 'admin')`. Which would be a
-       Need for a admin role. Or Triples for use-cases such as "The permission
+       Needs 可以是任何元组, 或者是任何你喜欢的任何对象, 但元组非常适合。
+       预先设计的 Need 类型 (for saving your typing) 是任何一对(method, value)
+       其中，method是用于指定常用事物，例如 `"role"`, `"user"`, etc.
+       value是其中的值。比如 `('role', 'admin')` 这种.这将需要管理员角色。
+       Or Triples for use-cases such as "The permission
        to edit a particular instance of an object or row", which might be represented
        as the triple `('article', 'edit', 46)`, where 46 is the key/ID for that
        row/object.
        
-       Essentially, how and what Needs are is very much down to the user, and is
-       designed loosely so that any effect can be achieved by using custom
-       instances as Needs.
+       从本质上说，how and what Needs are is very much down to the user, and is
+       designed loosely 以至于任何影响可以作为Needs通过使用用户实例实现。
 
        Whilst a Need is a permission to access a resource, an Identity should
        provide a set of Needs that it has access to.
