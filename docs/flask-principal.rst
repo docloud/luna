@@ -8,15 +8,12 @@ Flask Principal
 Introduction
 ------------
 
-Flask-Principal provides a very loose framework to tie in providers of two
-types of service, often located in different parts of a web application:
+Flask-Principal 提供一个极其松散的框架用于绑定两种类型的服务到 ``provider`` 上, 通常安置在一个Web应用的两个部分上:
 
-    1. Authentication providers
-    2. User information providers
+    1. 验证 providers
+    2. 用户信息 providers
 
-For example, an authentication provider may be oauth, using Flask-OAuth and
-the user information may be stored in a relational database. Looseness of
-the framework is provided by using signals as the interface.
+举个例子, 一个验证 provider 可能是 oauth, 使用 Flask-OAuth 并且这个用户信息也许被存储在一个关系型数据库中. 这个框架的松藕合性是以信号作为接口来实现的.
 
 The major components are the Identity, Needs, Permission, and the IdentityContext.
 
@@ -83,9 +80,7 @@ Links
 Protecting access to resources
 ------------------------------
 
-For users of Flask-Principal (not authentication providers), access
-restriction is easy to define as both a decorator and a context manager. A
-simple quickstart example is presented with commenting::
+对于 Flask-Principal 的用户(不是认证的 providers), 访问控制很容易被同时定为一个 ``decorator`` 和一个 ``context manager`` . 正有一个带注释的简单快速入门示例::
 
     from flask import Flask, Response
     from flask.ext.principal import Principal, Permission, RoleNeed
@@ -110,14 +105,10 @@ simple quickstart example is presented with commenting::
         with admin_permission.require():
             return Response('Only if you are admin')
 
-Authentication providers
+认证 providers
 ------------------------
 
-Authentication providers should use the `identity-changed` signal to indicate
-that a request has been authenticated. For example, the following code is a
-hypothetical example of how one might combine the popular 
-`Flask-Login <http://packages.python.org/Flask-Login/>`_  extension with 
-Flask-Principal::
+认证 providers 应该使用 `identity-changed` 信号来指示这个请求已经被认证. 举个例子, 下面的代码是一个说明如何将 ``Flask-Principal`` 与一个常用的扩展 `Flask-Login <http://packages.python.org/Flask-Login/>`_ 相结合的模拟示例::
 
 
     from flask import Flask, current_app, request, session
@@ -182,14 +173,10 @@ Flask-Principal::
         return redirect(request.args.get('next') or '/')
 
 
-User Information providers
+用户信息 providers
 --------------------------
 
-User information providers should connect to the `identity-loaded` signal to
-add any additional information to the Identity instance such as roles. The 
-following is another hypothetical example using Flask-Login and could be 
-combined with the previous example. It shows how one might use a role based
-permission scheme::
+用户信息 providers 应该连接到 `identity-loaded` 信号来添加一切附加信息到 Identity 实例、比如 roles. 下面是另一个使用 Flask-Login 的假设示例, 并且能和上一个例子相结合. 它表现了应该如何使用一个基于角色的权限表::
 
     from flask.ext.login import current_user
     from flask.ext.principal import identity_loaded, RoleNeed, UserNeed
@@ -210,13 +197,11 @@ permission scheme::
                 identity.provides.add(RoleNeed(role.name))
 
 
-Granular Resource Protection
-----------------------------
+粗粒度的权限保护
+----------------
 
-Now lets say, for example, you only want the author of a blog post to be able to
-edit said article. This can be achieved by creating the necessary `Need` and 
-`Permission` objects, and adding more logic into the `identity_loaded` signal 
-handler. For example::
+现在让我们说, 举个例子, 你只想让博客帖子的作者编辑文章. 这个可以通过创建必需的 `Need` 和 
+`Permission` 对象来实现, 并且添加更多逻辑到 `identity_loaded` 信号函数上, 举个例子::
 
     from collections import namedtuple
     from functools import partial
@@ -254,9 +239,7 @@ handler. For example::
             for post in current_user.posts:
                 identity.provides.add(EditBlogPostNeed(unicode(post.id)))
 
-The next step will be to protect the endpoint that allows a user to edit an 
-article. This is done by creating a permission object on the fly using the ID 
-of the resource, in this case the blog post::
+下一步是保护这个 endpoint 允许某个用户编辑一篇文章. 这是通过使用资源ID即时创建权限(Permission)对象来进行的 , 在这个博客文章例子中::
 
     @app.route('/posts/<post_id>', methods=['PUT', 'PATCH'])
     def edit_post(post_id):
