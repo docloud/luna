@@ -4,6 +4,15 @@
 from __future__ import absolute_import, division, print_function
 
 
+APP = {
+    'DEBUG': False,
+    'SECRET_KEY': '\x96\xdb\xd4s\xd1\xa6\xd5R\x1bq{p\xf5\xfa_y\xeda\xdc\x11sP\xba\xd6',
+}
+
+MONGODB = {
+    'conn': 'mongodb://localhost:27017/',
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

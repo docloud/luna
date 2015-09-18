@@ -3,8 +3,6 @@
 
 from __future__ import absolute_import, division, print_function
 
-from __future__ import print_function, division, absolute_import
-
 from flask.ext.login import (
     LoginManager,
     login_user,
@@ -33,9 +31,9 @@ class User(UserMixin):
         self.load_user_from_token(token)
 
     def load_user_from_token(self, token):
+        self.id = 1
         return self
 
-    @property
     def is_authenticated(self):
         return bool(self.id)
 
@@ -60,7 +58,7 @@ def load_user_from_request(request):
         token = request.cookies.get('Authorization')
 
     if token:
-        User(token=token)
+        return User(token=token)
     else:
         return None
 

@@ -6,3 +6,9 @@ flask-principal
 flask-restful
 
 webargs
+click
+fabric
+mongoengine
+
+pytest
+pytest-mock
