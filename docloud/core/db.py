@@ -17,4 +17,4 @@ def mongo_connect(config):
 
 
 def db_init(db_settings):
-    mongo_connect(db_settings.get('MONGODB'))
+    mongo_connect(db_settings.MONGODB)

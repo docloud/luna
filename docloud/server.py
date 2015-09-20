@@ -8,6 +8,8 @@ from docloud import settings
 from docloud.api import api_init
 from docloud.core.logger import logger_init
 from docloud.core.auth import auth_init
+from docloud.core.db import db_init
+from docloud.core.exc import exc_init
 
 
 def init(settings):
@@ -20,6 +22,10 @@ def init(settings):
     logger_init()
 
     auth_init(app)
+
+    db_init(settings.basic)
+
+    exc_init(app)
 
     return app
 

@@ -90,6 +90,8 @@ class Api(MethodView):
         members = inspect.getmembers(cls, predicate=lambda func: getattr(func, 'api', None))
 
         for name, member in members:
+            if 'methods' not in member.options:
+                member.options['methods'] = ('GET',)
             func = cls.make_view_func(name)
             rule = cls._build_api_rule(rule=member.rule)
             options = member.options
@@ -140,8 +142,3 @@ def route(rule, **options):
         f.options = options
         return f
     return decorator
-
-
-@parser.error_handler
-def webargs_error(e):
-    raise Exception('qwe')
