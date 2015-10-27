@@ -5,7 +5,6 @@ flask-login
 flask-principal
 flask-restful
 
-webargs
 click
 fabric
 mongoengine
@@ -13,3 +12,8 @@ jsonpickle
 
 pytest
 pytest-mock
+
+IPython
+requests
+
+PyYaml
