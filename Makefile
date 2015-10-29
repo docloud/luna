@@ -1,13 +1,17 @@
 #
-# Copyright 2015 Yufei Li, Docloud Project
+# Copyright 2015 Yufei Li, Luna Project
 #
 
 help:
-	@echo "demo 临时命令，重新安装Docloud客户端"
+	@echo "develop      Init project environment"
+	@echo "document     Build Document file"
+	@echo "test         Run test cases."
 
-demo:
-	@pip uninstall docloud -y
-	@pip install .
+develop:
+	@pip install -e .
 
 test:
 	py.test -s -v tests/
+
+document:
+	luna build document

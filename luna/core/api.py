@@ -1,15 +1,8 @@
 # coding=utf8
 
-from __future__ import absolute_import, division, print_function
-
 import inspect
-from importlib import import_module
 from flask import request, jsonify
 from werkzeug.wrappers import Response
-
-from flask.ext.login import (
-    login_required
-)
 from flask.views import (
     MethodView,
     http_method_funcs

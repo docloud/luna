@@ -1,12 +1,13 @@
 # coding=utf8
 
-from __future__ import print_function, division, absolute_import
-
+"""
+Copyright 2015
+"""
 import logging
 import logging.config
 
 from flask import request
-from luna.settings import basic
+from luna import config
 
 
 class MobileFilter(logging.Filter):
@@ -20,4 +21,4 @@ class MobileFilter(logging.Filter):
 
 
 def logger_init():
-    logging.config.dictConfig(basic.LOGGING)
+    logging.config.dictConfig(config.logging)

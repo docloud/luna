@@ -2,7 +2,7 @@
 
 from flask import Flask
 from luna.api import api_init
-from luna.server import show_routers
+from luna.core.serve import show_routers
 
 
 def test_api_init():

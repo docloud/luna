@@ -13,6 +13,13 @@ SERVER_ERROR = 500
 REJECT_ERROR = 403
 
 
+class LunaException(Exception):
+    """
+    Luna framework core exceptions.
+    """
+    pass
+
+
 class BaseException(Exception):
     code = 0
     message = "BaseException"

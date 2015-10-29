@@ -17,3 +17,5 @@ IPython
 requests
 
 PyYaml
+
+toolkit

@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
-from luna import server
+from luna.core import serve
 from luna.commands import shell as shell_module
 
 
@@ -21,7 +21,7 @@ def shell():
 
 @click.command()
 def serve():
-    server.serve()
+    serve.serve()
 
 
 cli.add_command(shell)
