@@ -3,5 +3,3 @@
 """
 A Tools for generate and validate container.
 """
-
-import path

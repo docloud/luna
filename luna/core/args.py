@@ -1,6 +1,8 @@
 #coding=utf8
 
 """
+Copyright 2015 Luna Project
+
 A wrapper for webargs library. parse arguments from http requests.
 """
 
@@ -39,22 +41,3 @@ class Email(str):
         if not EMAIL_PATTERN.match(email):
             raise ValidationError('Email is invalid.')
         return email
-
-
-class Arg(BaseArg):
-    def __init__(self, type_=None, default=None, required=False):
-        pass
-
-    def validated(self, name, value):
-        if value is Missing:
-            return value
-        if self.multiple and isinstance(value, (list, tuple)):
-            return [self._validate(name, each) for each in value]
-        else:
-            return self._validate(name, value)
-
-        validator = getattr(self.type, 'validator', None)
-        if validator:
-            value = validator(value)
-
-        super(Arg, self).validated(name=name, value=value)

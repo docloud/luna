@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # coding=utf8
 
-from __future__ import absolute_import, division, print_function
+"""
+Copyright 2015 Luna Project
+
+Authorazition use :mod:`flask.login`
+"""
 
 from flask.ext.login import (
     LoginManager,

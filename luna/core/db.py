@@ -1,8 +1,7 @@
 # coding=utf8
 
-from __future__ import absolute_import, division, print_function
-
 from mongoengine import connect
+from luna.core.config import config
 
 
 def mongo_connect(config):
@@ -16,5 +15,5 @@ def mongo_connect(config):
         connect('luna', host=config['conn'])
 
 
-def db_init(db_settings):
-    mongo_connect(db_settings.MONGODB)
+def db_init(app):
+    pass

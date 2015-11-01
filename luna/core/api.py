@@ -1,5 +1,11 @@
 # coding=utf8
 
+"""
+Copyright 2015 Luna Project
+
+RestFul API Views class, extends from :cls:`flask.view.MethodView`.
+"""
+
 import inspect
 from flask import request, jsonify
 from werkzeug.wrappers import Response

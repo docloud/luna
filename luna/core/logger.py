@@ -7,7 +7,7 @@ import logging
 import logging.config
 
 from flask import request
-from luna import config
+from luna.core.config import config
 
 
 class MobileFilter(logging.Filter):
@@ -20,5 +20,13 @@ class MobileFilter(logging.Filter):
             return False
 
 
-def logger_init():
+def logger_init(app):
     logging.config.dictConfig(config.logging)
+
+
+def get_logger():
+    if not request:
+        return logging.getLogger(config.name)
+    else:
+        # TODO: get logger from request
+        return logging.getLogger(config.name)
