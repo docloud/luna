@@ -1,4 +1,4 @@
-#coding=utf8
+# coding=utf8
 
 """
 Copyright 2015 Luna Project
@@ -10,7 +10,7 @@ import re
 import json
 from webargs import (
     ValidationError,
-    Arg as BaseArg,
+    Arg,
     Missing
 )
 
@@ -19,6 +19,7 @@ from webargs import (
 EMAIL_PATTERN = re.compile(r'.+@[\w\W]+\.')
 
 " Argument types "
+
 
 class Json(dict):
     def __init__(self, s):
@@ -30,7 +31,9 @@ class Json(dict):
     def __str__(self):
         return json.dumps(self)
 
+
 " Argument Validators "
+
 
 class Email(str):
     def __init__(self, email):

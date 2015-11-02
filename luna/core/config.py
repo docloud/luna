@@ -7,8 +7,12 @@ A module to handle default config settings.
 """
 
 import os
-from .exc import LunaException
 from toolkit.config import parse_file
+
+from .exc import (
+    ConfigLoadedError,
+    LunaException
+)
 
 
 class Config(object):
@@ -127,7 +131,6 @@ def choice(checker, seq):
     for item in seq:
         if item is None:
             continue
-        print(item)
         if checker(item):
             return item
     return None
@@ -148,11 +151,13 @@ def load_config(path=None):
         'env.py'
     ])
     if not path:
-        config_dict = {}
+        raise ConfigLoadedError('env file can not be loaded.')
     else:
         config_dict = parse_file(path)
+        config_dict.setdefault('logging', LoggingConfig().defualts)
     Config = type('Config', (object,), config_dict)
-    return Config()
+    config = Config()
+    return config
 
 
 config = load_config()

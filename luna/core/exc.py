@@ -19,6 +19,13 @@ class LoaderError(LunaException):
     pass
 
 
+class ConfigLoadedError(LunaException):
+    """
+    Config can not be loaded.
+    """
+    pass
+
+
 class ConfigSyntaxError(LunaException):
     """
     Error raise for invalid config syntax.

@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 # coding=utf8
 
-from __future__ import absolute_import, division, print_function
-
-import os
-
 from flask import Flask
 from luna.core.logger import logger_init
 from luna.core.auth import auth_init
 from luna.core.db import db_init
 from luna.core.config import config
+from luna.core.apiexc import exc_init
+from luna import loader
 
 
 def api_init(app, apis):
@@ -19,21 +17,17 @@ def api_init(app, apis):
     return app
 
 
-def dynamic_load_apis():
-    for module in os.walk('api'):
-        print(module)
-
-
 def init_app():
     app = Flask(__name__)
-    app.config.update(config)
+    app.config.update({'luna': config})
 
-    apis = dynamic_load_apis()
+    apis = loader.load_project_api()
     api_init(app, apis)
 
     logger_init(app)
     auth_init(app)
     db_init(app)
+    exc_init(app)
 
     return app
 
@@ -50,10 +44,7 @@ def show_routers(app):
 def serve():
     global app
     show_routers(app)
-    app.run(host=app.config['HOST'], port=app.config['PORT'])
+    app.run(host=config.app['host'], port=config.app['port'])
 
 
 app = init_app()
-
-if __name__ == '__main__':
-    serve()

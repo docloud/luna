@@ -3,6 +3,7 @@
 """
 Copyright 2015
 """
+
 import logging
 import logging.config
 
@@ -28,5 +29,7 @@ def get_logger():
     if not request:
         return logging.getLogger(config.name)
     else:
-        # TODO: get logger from request
         return logging.getLogger(config.name)
+
+
+logger = get_logger()

@@ -14,7 +14,7 @@ from flask.views import (
     http_method_funcs
 )
 
-from webargs.flaskparser import use_args, parser
+from webargs.flaskparser import use_args
 
 
 class Api(MethodView):
