@@ -1,8 +1,6 @@
 # coding=utf8
 
 from flask import Flask
-from luna.api import api_init
-from luna.core.server import show_routers
 
 
 def test_api_init():

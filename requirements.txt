@@ -5,9 +5,10 @@ flask-login
 flask-principal
 flask-restful
 
+webargs
+
 click
 fabric
-mongoengine
 jsonpickle
 
 pytest
@@ -19,3 +20,6 @@ requests
 PyYaml
 
 toolkit
+
+pymongo
+sqlalchemy
