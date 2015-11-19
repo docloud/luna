@@ -1,0 +1,13 @@
+{
+    "gitbook": "2.x.x",
+    "title": "Luna",
+    "description": ":)",
+    "plugins": ["katex", "todo"],
+    "pluginsConfig": {
+        "fontSettings": {
+            "theme": "night",
+            "family": "sans",
+            "size": 3
+        }
+    }
+}

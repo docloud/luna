@@ -55,8 +55,8 @@ class DBManager(object):
             self.create_sessions()
 
     def create_pool_managers(self):
-        for database in self.config:
-            name, alias = database["name"], database["alias"]
+        for name, database in iteritems(self.config):
+            alias = database["alias"]
             alias_creator = getattr(self, "alias_" + alias, None)
             self.db_pool_managers[name] = lambda: alias_creator(database)
 
@@ -71,7 +71,7 @@ class DBManager(object):
         return self.db_pool_managers.get(item)
 
     def alias_mysql(self, mysql_config):
-        conn_descriptor = "mysql://{host}:{port}/{database}".format(**mysql_config)
+        conn_descriptor = "mysql://{username}:{password}@{host}:{port}/{database}".format(**mysql_config)
         # There is a connection pool in engine
         engine = create_engine(conn_descriptor)
         ModelBase = declarative_base(bind=engine)

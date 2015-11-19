@@ -9,19 +9,6 @@ from flask import jsonify as flask_jsonify, request
 from flask.views import MethodView
 
 
-class View(MethodView):
-    arguments = {}
-
-    def dispatch_request(self, *args, **kwargs):
-        meth = getattr(self, request.method.lower(), None)
-        # if the request method is HEAD and we don't have a handler for it
-        # retry with GET
-        if meth is None and request.method == 'HEAD':
-            meth = getattr(self, 'get', None)
-        assert meth is not None, 'Unimplemented method %r' % request.method
-        return meth(*args, **kwargs)
-
-
 def init_app():
     app.config.update(config['app'])
     exclude = [pair[0] for pair in inspect.getmembers(MethodView)]
