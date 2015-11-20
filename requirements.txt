@@ -5,4 +5,19 @@ flask-login
 flask-principal
 flask-restful
 
+click
 webargs
+fabric
+jsonpickle
+
+pytest
+pytest-mock
+
+IPython
+requests
+
+PyYaml
+toolkit
+
+pymongo
+sqlalchemy

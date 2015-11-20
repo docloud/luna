@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # coding=utf8
 
-from __future__ import absolute_import, division, print_function
+"""
+Copyright 2015 Luna Project
 
-from __future__ import print_function, division, absolute_import
+Authorazition use :mod:`flask.login`
+"""
 
 from flask.ext.login import (
     LoginManager,
@@ -33,9 +35,9 @@ class User(UserMixin):
         self.load_user_from_token(token)
 
     def load_user_from_token(self, token):
+        self.id = 1
         return self
 
-    @property
     def is_authenticated(self):
         return bool(self.id)
 
@@ -60,7 +62,7 @@ def load_user_from_request(request):
         token = request.cookies.get('Authorization')
 
     if token:
-        User(token=token)
+        return User(token=token)
     else:
         return None
 

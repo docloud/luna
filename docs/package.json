@@ -1,0 +1,26 @@
+{
+  "name": "Luna",
+  "version": "1.0.0",
+  "description": ":)",
+  "main": "SUMMARY.md",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docloud/luna.git"
+  },
+  "keywords": [
+    "luna"
+  ],
+  "dependencies": [
+    "gitbook-plugin-mathjax",
+    "gitbook-plugin-todo"
+  ],
+  "author": "Yufei Li",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/docloud/luna/issues"
+  },
+  "homepage": "https://docloud.github.io/luna"
+}
