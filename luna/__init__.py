@@ -14,7 +14,3 @@ config = DefaultConfig.load()
 app = Flask(config["name"])
 app.config.update(config["app"])
 logger = app.logger
-
-import logging
-logger = logging.getLogger("demo")
-logger.info("acvbnm")

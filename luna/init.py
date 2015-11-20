@@ -6,13 +6,13 @@ from . import app, config, logger
 from .decorators import jsonify
 from .hooks import hooks_manager
 from flask import jsonify as flask_jsonify, request
-from flask.views import MethodView
+from flask.views import MethodView, http_method_funcs
 
 
 def init_app():
     app.config.update(config['app'])
     exclude = [pair[0] for pair in inspect.getmembers(MethodView)]
-    exclude.extend(['get', 'post', 'put', 'delete', 'options', 'head', 'router'])
+    exclude.extend(list(http_method_funcs))
 
     api_loader = hooks_manager.get_hook("api_loader")
     for api in api_loader():

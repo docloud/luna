@@ -88,7 +88,6 @@ def route(rule="", **options):
         func.rule = rule
         func.options = options
         return func
-
     return _deco
 
 

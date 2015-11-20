@@ -1,7 +1,6 @@
 # coding=utf8
 
 import requests
-from luna import settings
 from luna.clients import logger
 
 

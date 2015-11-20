@@ -93,4 +93,14 @@ class DBManager(object):
         }
 
 
+def _serialize(obj):
+    return {c.name: getattr(obj, c.name) for c in obj.__table__.columns}
+
+
+def serialize(obj):
+    if isinstance(obj, list):
+        return map(_serialize, obj)
+    return _serialize(obj)
+
+
 db = DBManager(config=config["databases"])
