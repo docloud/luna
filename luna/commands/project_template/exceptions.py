@@ -1,6 +1,9 @@
 # coding=utf8
 
-from luna import app
+"""
+Copyright {{date().year}} {{project}}
+"""
+
 from webargs.flaskparser import parser
 
 

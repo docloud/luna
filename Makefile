@@ -19,3 +19,6 @@ coverage:
 
 document:
 	luna build document
+
+publish-document:
+	@ghp-import docs/_book -p -n -b gh-pages
