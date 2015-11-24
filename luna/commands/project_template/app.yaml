@@ -19,6 +19,9 @@ databases:
     username: root
     password: ""
     database: test
+cache:
+  cache_type: redis
+  cache_redis_url: redis://127.0.0.1:6379/2
 celery:
   worker: 4
 switch:

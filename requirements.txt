@@ -1,6 +1,7 @@
 # Framework
 
 flask
+flask-cache
 flask-login
 flask-principal
 flask-restful
@@ -18,6 +19,8 @@ requests
 
 PyYaml
 toolkit
+lice
 
+redis
 pymongo
 sqlalchemy

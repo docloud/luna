@@ -29,7 +29,7 @@ def mkdirify(path):
         os.makedirs(path)
 
 
-def init_project(name):
+def init_project(name, license=None):
     logger.info('Building ...')
 
     context = {
@@ -40,14 +40,17 @@ def init_project(name):
     env.globals["gen_salt"] = gen_salt
 
     config["name"] = name
-    mkdirify(name)
 
-    # Project files.
-    mkdirify(join(name, name))
+    # Init files.
+    mkdirify(name)
+    copy('README.md', 'README.md', context)
     copy('app.yaml', 'app.yaml', context)
     copy('Makefile', 'Makefile', context)
     copy('setup.py', 'setup.py', context)
     copy('requirements.txt', 'requirements.txt', context)
+
+    # Project files.
+    mkdirify(join(name, name))
     copy('hook_init.py', join(name, '__init__.py'), context)
     copy('exceptions.py', join(name, 'exceptions.py'), context)
 

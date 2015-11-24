@@ -6,7 +6,7 @@ Copyright 2015 Luna Project
 A module to handle default config settings.
 """
 
-import six
+from six import iteritems
 import yaml
 import logging
 import logging.config
@@ -17,7 +17,7 @@ class ConfigError(LunaException):
     pass
 
 
-class DefaultConfig(object):
+class ConfigManager(object):
     __DEFAULTS__ = {
         "id": None,
         "name": "default",
@@ -30,17 +30,11 @@ class DefaultConfig(object):
             'host': '127.0.0.1',
             'port': 3000
         },
-        "redis": {
-            'host': '127.0.0.1',
-            'port': 6379
-        },
-        "mongodb": {
-            'host': '127.0.0.1',
-            'port': 27017
-        },
-        "mysql": {
-            'host': '127.0.0.1',
-            'port': 3306
+        "redis": None,
+        "mongodb": None,
+        "mysql": None,
+        "cache": {
+            'cache_type': 'null'
         },
         "logging": {
             'version': 1,
@@ -90,21 +84,34 @@ class DefaultConfig(object):
         }
     }
 
+    def __init__(self, path="app.yaml"):
+        self.config = ConfigManager.load(path)
+
+    def __getitem__(self, item):
+        return self.config[item]
+
+    def __setitem__(self, key, value):
+        self.config[key] = value
+
     @staticmethod
     def valid(config):
         pass
 
+    @staticmethod
+    def upper(config):
+        return {k.upper(): v for k, v in iteritems(config)}
+
     @classmethod
     def set_default(cls, config):
-        for k, v in six.iteritems(cls.__DEFAULTS__):
+        for k, v in iteritems(cls.__DEFAULTS__):
             config.setdefault(k ,v)
         cls.valid(config)
         return config
 
     @classmethod
-    def load(cls, path="app.yaml"):
+    def load(cls, path):
         try:
-            config = yaml.load(open("app.yaml"))
+            config = yaml.load(open(path))
         except IOError:
             config = cls.set_default({})
             logging.config.dictConfig(config["logging"])
@@ -114,3 +121,8 @@ class DefaultConfig(object):
             config = cls.set_default(config)
             logging.config.dictConfig(config["logging"])
         return config
+
+    def init_app(self, app):
+        app.config.update(self.upper(self.config["app"]))
+        app.config.update(self.upper(self.config["cache"]))
+        return app

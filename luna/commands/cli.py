@@ -14,7 +14,7 @@ def cli():
 @click.command('init')
 @click.argument('name')
 def init(name):
-    init_project(name)
+    init_project(name, license="mit")
 
 
 @click.command('shell')
