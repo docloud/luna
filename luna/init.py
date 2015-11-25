@@ -1,6 +1,7 @@
 # coding=utf8
 
 import inspect
+from gevent.pywsgi import WSGIServer
 
 from . import app, config, logger
 from .decorators import jsonify
@@ -62,6 +63,7 @@ def init_app():
     def crossdomain(response):
         h = response.headers
 
+        h['Access-Control-Allow-Headers'] = "Authorization"
         h['Access-Control-Allow-Origin'] = "*"
         h['Access-Control-Allow-Methods'] = "HEAD, GET, POST, PUT, DELETE, OPTIONS"
         h['Access-Control-Max-Age'] = 21600
@@ -76,8 +78,12 @@ def run_app():
     url_map = list(app.url_map.iter_rules())
     url_map.sort(key=attrgetter('rule'))
     pprint(url_map)
-    app.run(host=app.config.get('host') or '127.0.0.1',
-            port=app.config.get('port') or 3000)
+    server_tuple = (
+        app.config.get('host') or '127.0.0.1',
+        app.config.get('port') or 3000
+    )
+    gevent_app = WSGIServer(server_tuple, app)
+    gevent_app.serve_forever(stop_timeout=30)
 
 
 if __name__ == '__main__':

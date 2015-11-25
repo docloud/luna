@@ -24,12 +24,14 @@ class MethodViewInspector(Inspector):
     def __init__(self, view):
         self._view = view
 
-    def get_request_methods(self):
+    def get_view_funcs(self):
         all_members = inspect.getmembers(self._view)
+
         def is_api_view(func):
             if func.__name__ in http_method_funcs:
                 return True
             if hasattr(func, 'rule'):
                 return True
             return False
+
         return filter(is_api_view, all_members)

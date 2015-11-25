@@ -19,7 +19,7 @@ def init(name):
 
 @click.command('shell')
 def start_shell():
-    from luna import app, config, logger
+    from luna import app, config, logger, cache
     from luna.clients import http
     from IPython import embed
     embed()
