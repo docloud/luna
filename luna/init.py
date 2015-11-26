@@ -59,6 +59,15 @@ def init_app():
             code=getattr(e, 'error_code', 0)
         )), 500
 
+    @app.errorhandler(401)
+    def exception_handler(e):
+        logger.exception(e)
+        return flask_jsonify(dict(
+            exception=e.__class__.__name__,
+            message="Unauthenticated",
+            code=getattr(e, 'error_code', 401)
+        )), 401
+
     @app.after_request
     def crossdomain(response):
         h = response.headers

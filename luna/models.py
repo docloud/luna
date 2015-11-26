@@ -71,7 +71,7 @@ class DBManager(object):
         return self.db_pool_managers.get(item)
 
     def alias_mysql(self, mysql_config):
-        conn_descriptor = "mysql://{username}:{password}@{host}:{port}/{database}".format(**mysql_config)
+        conn_descriptor = "mysql://{username}:{password}@{host}:{port}/{database}?charset=utf8".format(**mysql_config)
         # There is a connection pool in engine
         engine = create_engine(conn_descriptor)
         ModelBase = declarative_base(bind=engine)
