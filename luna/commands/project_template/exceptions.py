@@ -19,12 +19,14 @@ class Error(Exception):
     " 0 ~ 1000 System Error "
     BOOTSTRAP_ERROR = 0
     ARGUMENT_ERROR = 1
+    DATABASE_ERROR = 2
 
     " 1000 ~ fin User Error "
 
     translate = {
         BOOTSTRAP_ERROR: u'System Internal Error',
         ARGUMENT_ERROR: u'Argument Error',
+        DATABASE_ERROR: u'Database Error'
     }
 
     def __init__(self, code=0, message=""):

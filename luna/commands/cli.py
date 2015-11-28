@@ -8,6 +8,7 @@ from fabric.api import (
 )
 from fabric.contrib.project import rsync_project
 
+from .. import app, config, logger, cache
 from .bootstrap import init_project
 from ..init import run_app
 
@@ -20,12 +21,17 @@ def cli():
 @click.command('init')
 @click.argument('name')
 def init(name):
+    """
+    Init service
+    """
     init_project(name, license="mit")
 
 
 @click.command('shell')
 def start_shell():
-    from luna import app, config, logger, cache
+    """
+    Start shell
+    """
     from luna.clients import http
     from IPython import embed
     embed()
@@ -33,31 +39,41 @@ def start_shell():
 
 @click.command('serve')
 def start_server():
+    """
+    Start server
+    """
     from imp import load_package
-    from luna import config, logger
-    name, app_config = config["name"], config["app"]
+    name, host, port = app.name, app.config["HOST"], app.config["PORT"]
     if name != "default":
         load_package(name, name)
-    logger.info("Server starting on http://{host}:{port}".format(**app_config))
+    logger.info("Server starting on http://{}:{}".format(host, port))
     run_app()
 
 @click.command('upload')
 @click.argument('source')
 @click.argument('dest')
-def upload_files(source, dest):
-    from luna import config
-    env.user = "runner"
-    env.host_string = config["deploy"]["host"]
+@click.option('--user', default="runner", help="user")
+@click.option('--host', default=config["deploy"]["host"], help="host")
+def upload_files(source, dest, user, host):
+    """
+    Upload files
+    """
+    env.user = user
+    env.host_string = host
     env.use_ssh_config = True
 
     rsync_project(local_dir=source, remote_dir=dest, exclude=(".git", ".idea"))
 
 
 @click.command('deploy')
-def deploy():
-    from luna import config
-    env.user = "runner"
-    env.host_string = config["deploy"]["host"]
+@click.option('--user', default="runner", help="user")
+@click.option('--host', default=config["deploy"]["host"], help="host")
+def deploy(user, host):
+    """
+    Deploy service
+    """
+    env.user = user
+    env.host_string = host
     env.use_ssh_config = True
 
     name = config['name']

@@ -4,12 +4,38 @@
 Copyright 2015 Luna Project
 """
 
+import functools
 from six import iteritems
 from luna import config, logger
 from pymongo import MongoClient
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.declarative import declarative_base
+
+
+class DatabaseError(Exception):
+    pass
+
+
+def make_db_commit_decorator(DBSession, exc_class=DatabaseError, *exc_args, **exc_kwargs):
+    def decorated(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            ret = func(*args, **kwargs)
+            session = DBSession()
+            try:
+                session.flush()
+                session.commit()
+            except SQLAlchemyError as e:
+                session.rollback()
+                logger.error(e.message)
+                raise exc_class(*exc_args, **exc_kwargs)
+            finally:
+                session.close()
+            return ret
+        return wrapper
+    return decorated
 
 
 class DBManager(object):
@@ -75,7 +101,7 @@ class DBManager(object):
         # There is a connection pool in engine
         engine = create_engine(conn_descriptor)
         ModelBase = declarative_base(bind=engine)
-        Session = sessionmaker(bind=engine)
+        Session = scoped_session(sessionmaker(bind=engine))
         return {
             "engine": engine,
             "base": ModelBase,

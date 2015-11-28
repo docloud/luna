@@ -11,7 +11,6 @@ from flask.views import MethodView, http_method_funcs
 
 
 def init_app():
-    app.config.update(config['app'])
     exclude = [pair[0] for pair in inspect.getmembers(MethodView)]
     exclude.extend(list(http_method_funcs))
 
@@ -88,8 +87,8 @@ def run_app():
     url_map.sort(key=attrgetter('rule'))
     pprint(url_map)
     server_tuple = (
-        app.config.get('host') or '127.0.0.1',
-        app.config.get('port') or 3000
+        app.config.get('HOST') or '127.0.0.1',
+        app.config.get('PORT') or 3000
     )
     gevent_app = WSGIServer(server_tuple, app)
     gevent_app.serve_forever(stop_timeout=30)
