@@ -4,6 +4,7 @@ flask-cache
 flask-login
 flask-principal
 flask-restful
+flask-sqlalchemy
 
 click
 webargs
@@ -30,3 +31,4 @@ sqlalchemy
 
 # Runtime
 gevent
+gunicorn

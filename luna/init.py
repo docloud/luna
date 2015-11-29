@@ -19,7 +19,7 @@ def init_app():
         ins = api()
 
         # Merge default decorator list
-        decorators = [] # Default
+        decorators = []  # Default
         decorators.extend(api.decorators)
         decorators = list(set(decorators))
         api.decorators = [jsonify]
@@ -47,7 +47,6 @@ def init_app():
                 **options
             )
         app.add_url_rule(api.router, view_func=api.as_view(api.__name__))
-
 
     @app.errorhandler(Exception)
     def exception_handler(e):
