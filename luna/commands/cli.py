@@ -62,7 +62,7 @@ def upload_files(source, dest, user, host):
     env.host_string = host
     env.use_ssh_config = True
 
-    rsync_project(local_dir=source, remote_dir=dest, exclude=(".git", ".idea"))
+    rsync_project(local_dir=source, remote_dir=dest, exclude=(".git", ".idea", "node_modules", "build"))
 
 
 @click.command('deploy')
@@ -78,7 +78,7 @@ def deploy(user, host):
 
     name = config['name']
     remote_dir = "/srv/{}".format(name)
-    rsync_project(local_dir=".", remote_dir=remote_dir, exclude=(".git", ".idea", "node_modules"))
+    rsync_project(local_dir=".", remote_dir=remote_dir, exclude=(".git", ".idea", "node_modules", "build"))
     with cd(remote_dir):
         run("sudo /srv/venv/luna/bin/pip install .".format(name))
         run("sudo supervisorctl restart {}".format(name))
